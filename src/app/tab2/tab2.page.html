@@ -1,9 +1,21 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Two
+      Our services
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>We offer you services</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let service of services">
+      <ion-label>{{service.name}}</ion-label>
+
+      <ion-label><ion-icon name="logo-usd"></ion-icon>{{service.price}}</ion-label>
+
+    </ion-item>
+  </ion-list>
+</ion-content>
