@@ -24,7 +24,7 @@ export class ToastService {
             showCloseButton: true,
             duration: 2000,
             position: 'top',
-            closeButtonText: 'Done',
+            closeButtonText: 'Закрыть',
             color: 'primary'
         });
         toast.present();
@@ -36,7 +36,7 @@ export class ToastService {
             showCloseButton: true,
             duration: 2000,
             position: 'top',
-            closeButtonText: 'Done',
+            closeButtonText: 'Закрыть',
             color: 'danger'
         });
         toast.present();
@@ -50,7 +50,7 @@ export class ToastService {
             showCloseButton: true,
             duration: 2000,
             position: 'top',
-            closeButtonText: 'Done',
+            closeButtonText: 'Закрыть',
             color: 'default'
         });
         toast.present();
@@ -63,7 +63,7 @@ export class ToastService {
             showCloseButton: true,
             duration: 2000,
             position: 'top',
-            closeButtonText: 'Done',
+            closeButtonText: 'Закрыть',
             color: 'success'
         });
         toast.present();
@@ -76,7 +76,7 @@ export class ToastService {
             showCloseButton: true,
             duration: 2000,
             position: 'top',
-            closeButtonText: 'Done',
+            closeButtonText: 'Закрыть',
             color: 'warning'
         });
         toast.present();
@@ -88,7 +88,7 @@ export class ToastService {
             showCloseButton: true,
             duration: 2000,
             position: 'top',
-            closeButtonText: 'Done',
+            closeButtonText: 'Закрыть',
             color: 'dark'
         });
         toast.present();

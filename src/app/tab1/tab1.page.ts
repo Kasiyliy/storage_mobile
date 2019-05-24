@@ -4,9 +4,8 @@ import {CommentService} from '../services/comment.service';
 import {Comments} from '../models/comments';
 import {ToastService} from '../services/toast.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ServiceService} from '../services/services/service.service';
 import {HttpClient} from '@angular/common/http';
-import {Appointments} from '../models/appointments/appointments';
+import {mergeMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-tab1',
@@ -46,17 +45,20 @@ export class Tab1Page implements OnInit {
     }
 
 
-
-
     add() {
         const comment = new Comments();
         comment.name = this.addComment.get('name').value;
         comment.text = this.addComment.get('text').value;
-        this.http.post(environment.apiUrl + 'comments', {comment})
-            .subscribe(perf => {
-                this.toastrService.presentDangerToast('Коммент добавлен!');
-            }, err => {
-                this.toastrService.presentDangerToast('Ошибка!');
-            });
+        this.commentService.save(comment).pipe(
+            mergeMap(perf => {
+                this.toastrService.presentInfoToast('Отзыв оставлен!');
+                this.addComment.reset();
+                return this.commentService.getAll();
+            }),
+        ).subscribe(perf => {
+            this.comments = perf;
+        }, err => {
+            this.toastrService.presentDangerToast('Ошибка!');
+        });
     }
 }
