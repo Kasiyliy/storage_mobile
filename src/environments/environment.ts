@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'http://za.kaztap.kz/api/',
-  url: 'http://za.kaztap.kz/',
+  apiUrl: 'http://localhost:8000/api/',
+  url: 'http://localhost:8000/',
   production: false
 };
 
