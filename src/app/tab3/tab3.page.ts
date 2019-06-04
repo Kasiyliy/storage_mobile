@@ -38,12 +38,11 @@ export class Tab3Page implements OnInit {
             employee_id: ['', Validators.required],
             service_id: ['', Validators.required],
             start_time: ['', Validators.required],
-            finish_time: ['', Validators.required],
             comments: ['', Validators.required],
             date: ['', Validators.required],
         });
 
-        this.serviceService.getAll().subscribe(perf => {
+        this.serviceService.getAllOnlyVisible().subscribe(perf => {
             this.services = perf;
         });
     }
@@ -61,13 +60,13 @@ export class Tab3Page implements OnInit {
         appointment.employee_id = this.addAppointment.get('employee_id').value;
         appointment.service_id = this.addAppointment.get('service_id').value;
         appointment.starting_hour = (<string>this.addAppointment.get('start_time').value).split(':')[0];
-        appointment.finish_hour = (<string>this.addAppointment.get('finish_time').value).split(':')[0];
-        appointment.starting_minute = (<string>this.addAppointment.get('start_time').value).split(':')[1];
-        appointment.finish_minute = (<string>this.addAppointment.get('finish_time').value).split(':')[1];
+        appointment.finish_hour = (parseInt(appointment.starting_hour, 10) + 1) + '';
+        appointment.starting_minute = '00';
+        appointment.finish_minute = '00';
         appointment.date = this.addAppointment.get('date').value;
         appointment.comments = this.addAppointment.get('comments').value;
 
-        this.http.get(environment.apiUrl + 'appointment/store', {
+        this.http.get<any>(environment.apiUrl + 'appointment/store', {
             params:
                 {
                     email: appointment.email,
@@ -81,14 +80,19 @@ export class Tab3Page implements OnInit {
                     starting_hour: appointment.starting_hour,
                     starting_minute: appointment.starting_minute,
                     finish_hour: appointment.finish_hour,
-                    finish_minute: appointment.finish_minute  ,
+                    finish_minute: appointment.finish_minute,
                 }
         })
             .subscribe(perf => {
-                this.toastService.presentInfoToast('Added');
+                if (perf.success === true) {
+                    this.addAppointment.reset();
+                    this.toastService.presentInfoToast('Добавлено!');
+                } else {
+                    this.toastService.presentWarningToast('Выберите другое время!');
+                }
                 console.log(perf);
             }, err => {
-                this.toastService.presentDarkToast('Error!');
+                this.toastService.presentDarkToast('Ошибка!!');
             });
     }
 
@@ -118,6 +122,11 @@ export class Tab3Page implements OnInit {
     }
 
     change2() {
+
+        const starting_hour = (<string>this.addAppointment.get('start_time').value).split(':')[0];
+        const finish_hour = (parseInt(starting_hour, 10) + 1) + '';
+        const finishing_minute = '00';
+
         const first_name = this.addAppointment.get('first_name').value;
         const last_name = this.addAppointment.get('last_name').value;
         const phone = this.addAppointment.get('phone').value;
@@ -125,9 +134,7 @@ export class Tab3Page implements OnInit {
         const comments = this.addAppointment.get('comments').value;
         const service_id = this.addAppointment.get('service_id').value;
         const start_time = moment(this.addAppointment.get('start_time').value, 'HH:mm');
-        const finish_time = moment(this.addAppointment.get('finish_time').value, 'HH:mm');
-        const difference = moment.duration(finish_time.diff(start_time));
-        const hours = difference.asHours() * 60;
+        const finish_time = moment(finish_hour + ':' + finishing_minute, 'HH:mm');
         const headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
 
@@ -146,7 +153,7 @@ export class Tab3Page implements OnInit {
             })
                 .subscribe(perf => {
                     this.service = perf;
-                    this.price = hours * this.service.price / 60;
+                    this.price = this.service.price;
                 });
         }
     }

@@ -13,7 +13,11 @@ export class ServiceService {
     constructor(private http: HttpClient) {
     }
 
-    getAll(): Observable<Services[]> {
+    getAllOnlyVisible(): Observable<Services[]> {
         return this.http.get<Services[]>(this.apiUrl + 'services');
+    }
+
+    getAll(): Observable<Services[]> {
+        return this.http.get<Services[]>(this.apiUrl + 'services/all');
     }
 }

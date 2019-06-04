@@ -22,8 +22,8 @@
                     <ion-input formControlName="last_name"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="floating">Телефон</ion-label>
-                    <ion-input pattern="^\+77(\d{9})$" formControlName="phone"></ion-input>
+                    <ion-label position="floating">Телефон (+7708.......)</ion-label>
+                    <ion-input pattern="^\+77(\d{9})$" type="phone" formControlName="phone"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label position="floating">Email</ion-label>
@@ -57,12 +57,7 @@
 
                 <ion-item *ngIf="success">
                     <ion-label>Время начала</ion-label>
-                    <ion-datetime formControlName="start_time" display-format="HH:mm"></ion-datetime>
-                </ion-item>
-                <ion-item *ngIf="success">
-                    <ion-label>Время конца</ion-label>
-                    <ion-datetime (ionChange)="change2()" formControlName="finish_time"
-                                  display-format="HH:mm"></ion-datetime>
+                    <ion-datetime (ionChange)="change2()" formControlName="start_time" display-format="HH"></ion-datetime>
                 </ion-item>
 
                 <ion-item>
@@ -71,7 +66,7 @@
                 </ion-item>
 
 
-                <ion-label *ngIf="success">{{price}}</ion-label>
+                <ion-label *ngIf="success">{{price}} KZT</ion-label>
 
 
                 <ion-button [disabled]="!addAppointment.valid" (click)="add()"
